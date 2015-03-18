@@ -1,0 +1,11 @@
+{
+    "validateIndentation": 4,
+    "validateLineBreaks": "LF",
+    "requireCommaBeforeLineBreak": true,
+    "requireOperatorBeforeLineBreak": ["?", "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
+    "disallowImplicitTypeConversion": ["numeric", "boolean", "binary", "string"],
+    "requireSpacesInFunctionExpression": {
+        "beforeOpeningRoundBrace": true,
+        "beforeOpeningCurlyBrace": true
+    }
+}
