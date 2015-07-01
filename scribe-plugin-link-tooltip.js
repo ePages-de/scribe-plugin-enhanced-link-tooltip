@@ -133,7 +133,13 @@
                         },
                         repositionTooltip = function () {
                             // calculate position
-                            var selectionRects = selection.range.getClientRects(),
+                            var selectionRects = (function () {
+                                    var rects = selection.range.getClientRects();
+                                    if (!rects.length) {
+                                        rects = selection.range.startContainer.getClientRects();
+                                    }
+                                    return rects;
+                                }()),
                                 scribeParentRect = scribe.el.parentNode.getBoundingClientRect(),
                                 biggestSelection = [].reduce.call(selectionRects, function (biggest, rect) {
                                     return rect.width >= biggest.width ? {
