@@ -1,0 +1,27 @@
+{
+  "name": "scribe-plugin-enhanced-link-tooltip",
+  "version": "0.1.0",
+  "description": "A Scribe plugin for doing a Medium/Google Docs style tooltip UI instead of a prompt for inserting links.",
+  "main": "scribe-plugin-link-tooltip.js",
+  "scripts": {
+    "test": "echo ¯\\_(ツ)_/¯ no tests yet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ePages-de/scribe-plugin-enhanced-link-tooltip.git"
+  },
+  "keywords": [
+    "scribe",
+    "plugin",
+    "link",
+    "tooltip",
+    "medium",
+    "google"
+  ],
+  "author": "Paolo Priotto <p.priotto@epages.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ePages-de/scribe-plugin-enhanced-link-tooltip/issues"
+  },
+  "homepage": "https://github.com/ePages-de/scribe-plugin-enhanced-link-tooltip#readme"
+}
