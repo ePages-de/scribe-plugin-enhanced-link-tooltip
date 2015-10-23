@@ -179,11 +179,7 @@
                     ui.removeBtn.addEventListener('click', unlink);
 
                     // On clicking off the tooltip, hide the tooltip.
-                    // Deferred because otherwise it would be called immediately
-                    // by the click event leading us here bubbling up.
-                    setTimeout(function () {
-                        document.addEventListener('click', onBlur);
-                    }, 0);
+                    document.addEventListener('click', onBlur);
                 },
 
                 executeCommand = function () {
@@ -203,7 +199,9 @@
                         getSelection().collapseToEnd();
                     }.bind(this));
 
-                    ui.linkInput.focus();
+                    setTimeout(function () {
+                        ui.linkInput.focus();
+                    }, 0);
                 },
 
             // Show the tooltip when a link has focus. When submitting change the link.
@@ -211,7 +209,7 @@
                 queryState = function () {
                     var selection = new scribe.api.Selection();
                     return isEditState || selection.getContaining(function (node) {
-                        if (node.nodeName === 'A' && !isEditState) {
+                        if (node.nodeName === 'A' && !isEditState && scribe.el.contains(node)) {
                             showTooltip('view', selection, node,
                                 node.getAttribute('href'), // ! not node.href as that would be expanded
                                 function (newHref) {
@@ -227,11 +225,20 @@
                 };
 
             // bind and register
+            var unbindAndExecute = function () {
+                document.removeEventListener('click', unbindAndExecute);
+                executeCommand.call(linkTooltipCommand);
+            };
+
             var linkTooltipCommand = new scribe.api.Command('createLink');
             scribe.commands.linkTooltip = linkTooltipCommand;
 
             linkTooltipCommand.queryState = queryState;
-            linkTooltipCommand.execute = executeCommand.bind(linkTooltipCommand);
+            linkTooltipCommand.execute = function () {
+                // this is needed since scribe toolbar executes the command on mousedown
+                // (see https://github.com/guardian/scribe-plugin-toolbar/pull/18)
+                document.addEventListener('click', unbindAndExecute);
+            };
 
             ui.editBtn.addEventListener('click', executeCommand);
 
