@@ -8,7 +8,7 @@
     var scribePluginLinkTooltip = function (options) {
 
         // http://stackoverflow.com/a/25206094/1317451
-        function findClosestParent (startElement, fn) {
+        function findClosestParent(startElement, fn) {
             var parent = startElement.parentElement;
             if (!parent) {
                 return undefined;
@@ -48,8 +48,8 @@
                 },
 
                 linkSanitizer = options.linkSanitizer || function (str) {
-                        return str;
-                    },
+                    return str;
+                },
 
             // Extends selection to whole anchor. Returns anchor node or undefined.
                 selectAnchorContent = function (selection) {
@@ -211,19 +211,19 @@
                 queryState = function () {
                     var selection = new scribe.api.Selection();
                     return isEditState || selection.getContaining(function (node) {
-                            if (node.nodeName === 'A' && !isEditState) {
-                                showTooltip('view', selection, node,
-                                    node.getAttribute('href'), // ! not node.href as that would be expanded
-                                    function (newHref) {
-                                        node.href = newHref;
-                                        // scribe (or the browser?) automatically removes the link if newHref is empty
-                                    });
-                            } else {
-                                tooltipNode.classList.add(namespace + '-hidden');
-                            }
+                        if (node.nodeName === 'A' && !isEditState) {
+                            showTooltip('view', selection, node,
+                                node.getAttribute('href'), // ! not node.href as that would be expanded
+                                function (newHref) {
+                                    node.href = newHref;
+                                    // scribe (or the browser?) automatically removes the link if newHref is empty
+                                });
+                        } else {
+                            tooltipNode.classList.add(namespace + '-hidden');
+                        }
 
-                            return node.nodeName === nodeName;
-                        });
+                        return node.nodeName === nodeName;
+                    });
                 };
 
             // bind and register
@@ -250,4 +250,4 @@
     } else {
         window.scribePluginLinkTooltip = scribePluginLinkTooltip;
     }
-})();
+}());
