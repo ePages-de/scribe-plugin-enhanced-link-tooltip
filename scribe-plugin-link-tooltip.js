@@ -82,7 +82,7 @@
                             /* eslint no-use-before-define:0 */ // circular references
                             tooltipNode.removeEventListener('submit', link);
                             ui.removeBtn.removeEventListener('click', unlink);
-                            document.removeEventListener('click', onBlur);
+                            document.removeEventListener('mouseup', onBlur);
                             window.removeEventListener('resize', repositionTooltip);
                         },
                         link = function (e) {
@@ -179,7 +179,7 @@
                     ui.removeBtn.addEventListener('click', unlink);
 
                     // On clicking off the tooltip, hide the tooltip.
-                    document.addEventListener('click', onBlur);
+                    document.addEventListener('mouseup', onBlur);
                 },
 
                 executeCommand = function () {
