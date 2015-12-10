@@ -23,7 +23,7 @@
             // setup UI DOM
                 namespace = options.namespace || 'scribe-plugin-link-tooltip',
                 tooltipNode = (function () {
-                    var newTooltip = document.createElement('form'),
+                    var newTooltip = document.createElement('div'),
                         parentElement = scribe.el.parentNode;
                     newTooltip.className = namespace + ' ' + namespace + '-hidden';
                     newTooltip.style.position = 'absolute';
@@ -80,7 +80,8 @@
                             tooltipNode.classList.add(namespace + '-hidden');
 
                             /* eslint no-use-before-define:0 */ // circular references
-                            tooltipNode.removeEventListener('submit', link);
+                            ui.applyBtn.removeEventListener('click', link);
+                            ui.linkInput.removeEventListener('keyup', linkOnReturnKey);
                             ui.removeBtn.removeEventListener('click', unlink);
                             document.removeEventListener('mouseup', onBlur);
                             window.removeEventListener('resize', repositionTooltip);
@@ -89,6 +90,9 @@
                             e.preventDefault();
                             teardown();
                             submitCallback(linkSanitizer(String(ui.linkInput.value).trim()));
+                        },
+                        linkOnReturnKey = function (e) {
+                            if (e.keyCode === 13) link(e);
                         },
                         unlink = function () {
                             selectAnchorContent(selection);
@@ -175,7 +179,8 @@
                     repositionTooltip();
 
                     window.addEventListener('resize', repositionTooltip);
-                    tooltipNode.addEventListener('submit', link);
+                    ui.applyBtn.addEventListener('click', link);
+                    ui.linkInput.addEventListener('keyup', linkOnReturnKey);
                     ui.removeBtn.addEventListener('click', unlink);
 
                     // On clicking off the tooltip, hide the tooltip.
