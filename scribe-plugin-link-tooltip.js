@@ -23,7 +23,7 @@
             // setup UI DOM
                 namespace = options.namespace || 'scribe-plugin-link-tooltip',
                 tooltipNode = (function () {
-                    var newTooltip = document.createElement('form'),
+                    var newTooltip = document.createElement('div'),
                         parentElement = scribe.el.parentNode;
                     newTooltip.className = namespace + ' ' + namespace + '-hidden';
                     newTooltip.style.position = 'absolute';
@@ -40,6 +40,7 @@
                     return newTooltip;
                 }()),
                 ui = { /* eslint key-spacing:0 */
+                    arrow:     tooltipNode.querySelector('[data-' + namespace + '-role=arrow]'),
                     link:      tooltipNode.querySelector('[data-' + namespace + '-role=link]'),
                     linkInput: tooltipNode.querySelector('[data-' + namespace + '-role=input]'),
                     editBtn:   tooltipNode.querySelector('[data-' + namespace + '-role=edit]'),
@@ -80,7 +81,8 @@
                             tooltipNode.classList.add(namespace + '-hidden');
 
                             /* eslint no-use-before-define:0 */ // circular references
-                            tooltipNode.removeEventListener('submit', link);
+                            ui.applyBtn.removeEventListener('click', link);
+                            ui.linkInput.removeEventListener('keyup', linkOnReturnKey);
                             ui.removeBtn.removeEventListener('click', unlink);
                             document.removeEventListener('mouseup', onBlur);
                             window.removeEventListener('resize', repositionTooltip);
@@ -89,6 +91,9 @@
                             e.preventDefault();
                             teardown();
                             submitCallback(linkSanitizer(String(ui.linkInput.value).trim()));
+                        },
+                        linkOnReturnKey = function (e) {
+                            if (e.keyCode === 13) link(e);
                         },
                         unlink = function () {
                             selectAnchorContent(selection);
@@ -155,11 +160,24 @@
                                 left = biggestSelection.rect ? biggestSelection.rect.left : 0,
                                 top = selectionRects.length ? selectionRects[selectionRects.length - 1].bottom : 0,
                                 tooltipWidth = parseFloat(getComputedStyle(tooltipNode).width),
-                                offsetLeft = left - scribeParentRect.left - tooltipWidth / 2;
+                                offsetLeft = left - scribeParentRect.left - tooltipWidth / 2,
+                                correctedOffsetLeft = offsetLeft < scribeParentRect.left
+                                    ? scribeParentRect.left
+                                    : Math.min(offsetLeft, scribeParentRect.left + scribeParentRect.width - tooltipWidth - 10),
+                                arrowWidth, arrowOffsetLeft;
 
                             // set position
                             tooltipNode.style.top = top - scribeParentRect.top + 'px';
-                            tooltipNode.style.left = offsetLeft + 'px';
+                            tooltipNode.style.left = correctedOffsetLeft + 'px';
+                            if (ui.arrow) {
+                                arrowWidth = ui.arrow.getBoundingClientRect().width;
+                                arrowOffsetLeft = offsetLeft - correctedOffsetLeft - arrowWidth / 2;
+                                if (arrowOffsetLeft < 0) {
+                                    arrowOffsetLeft = Math.max(arrowOffsetLeft, tooltipWidth / -2) + 10;
+                                }
+
+                                ui.arrow.style.marginLeft = arrowOffsetLeft + 'px';
+                            }
 
                             // show
                             tooltipNode.classList.remove(namespace + '-hidden');
@@ -175,7 +193,8 @@
                     repositionTooltip();
 
                     window.addEventListener('resize', repositionTooltip);
-                    tooltipNode.addEventListener('submit', link);
+                    ui.applyBtn.addEventListener('click', link);
+                    ui.linkInput.addEventListener('keyup', linkOnReturnKey);
                     ui.removeBtn.addEventListener('click', unlink);
 
                     // On clicking off the tooltip, hide the tooltip.
