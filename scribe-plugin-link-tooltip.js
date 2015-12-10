@@ -40,6 +40,7 @@
                     return newTooltip;
                 }()),
                 ui = { /* eslint key-spacing:0 */
+                    arrow:     tooltipNode.querySelector('[data-' + namespace + '-role=arrow]'),
                     link:      tooltipNode.querySelector('[data-' + namespace + '-role=link]'),
                     linkInput: tooltipNode.querySelector('[data-' + namespace + '-role=input]'),
                     editBtn:   tooltipNode.querySelector('[data-' + namespace + '-role=edit]'),
@@ -159,11 +160,24 @@
                                 left = biggestSelection.rect ? biggestSelection.rect.left : 0,
                                 top = selectionRects.length ? selectionRects[selectionRects.length - 1].bottom : 0,
                                 tooltipWidth = parseFloat(getComputedStyle(tooltipNode).width),
-                                offsetLeft = left - scribeParentRect.left - tooltipWidth / 2;
+                                offsetLeft = left - scribeParentRect.left - tooltipWidth / 2,
+                                correctedOffsetLeft = offsetLeft < scribeParentRect.left
+                                    ? scribeParentRect.left
+                                    : Math.min(offsetLeft, scribeParentRect.left + scribeParentRect.width - tooltipWidth - 10),
+                                arrowWidth, arrowOffsetLeft;
 
                             // set position
                             tooltipNode.style.top = top - scribeParentRect.top + 'px';
-                            tooltipNode.style.left = offsetLeft + 'px';
+                            tooltipNode.style.left = correctedOffsetLeft + 'px';
+                            if (ui.arrow) {
+                                arrowWidth = ui.arrow.getBoundingClientRect().width;
+                                arrowOffsetLeft = offsetLeft - correctedOffsetLeft - arrowWidth / 2;
+                                if (arrowOffsetLeft < 0) {
+                                    arrowOffsetLeft = Math.max(arrowOffsetLeft, tooltipWidth / -2) + 10;
+                                }
+
+                                ui.arrow.style.marginLeft = arrowOffsetLeft + 'px';
+                            }
 
                             // show
                             tooltipNode.classList.remove(namespace + '-hidden');
