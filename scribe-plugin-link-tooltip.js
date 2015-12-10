@@ -162,8 +162,8 @@
                                 tooltipWidth = parseFloat(getComputedStyle(tooltipNode).width),
                                 offsetLeft = left - scribeParentRect.left - tooltipWidth / 2,
                                 correctedOffsetLeft = offsetLeft < scribeParentRect.left
-                                    ? scribeParentRect.left
-                                    : Math.min(offsetLeft, scribeParentRect.left + scribeParentRect.width - tooltipWidth - 10),
+                                    ? 0
+                                    : Math.min(offsetLeft, scribeParentRect.width - tooltipWidth - 10),
                                 arrowWidth, arrowOffsetLeft;
 
                             // set position
