@@ -161,7 +161,7 @@
                                 top = selectionRects.length ? selectionRects[selectionRects.length - 1].bottom : 0,
                                 tooltipWidth = parseFloat(getComputedStyle(tooltipNode).width),
                                 offsetLeft = left - scribeParentRect.left - tooltipWidth / 2,
-                                correctedOffsetLeft = offsetLeft < scribeParentRect.left
+                                correctedOffsetLeft = offsetLeft < 0
                                     ? 0
                                     : Math.min(offsetLeft, scribeParentRect.width - tooltipWidth - 10),
                                 arrowWidth, arrowOffsetLeft;
@@ -219,7 +219,7 @@
                     }.bind(this));
 
                     setTimeout(function () {
-                        ui.linkInput.focus();
+                    ui.linkInput.focus();
                     }, 0);
                 },
 
