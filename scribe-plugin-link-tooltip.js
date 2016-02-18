@@ -219,7 +219,7 @@
                     }.bind(this));
 
                     setTimeout(function () {
-                    ui.linkInput.focus();
+                        ui.linkInput.focus();
                     }, 0);
                 },
 
