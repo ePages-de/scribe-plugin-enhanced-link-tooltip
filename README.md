@@ -51,6 +51,7 @@ These few CSS styles are more or less required to make the plugin work:
 .scribe-plugin-link-tooltip {
   z-index: 1;
   white-space: nowrap;
+  transform: translateY(14px);
 }
 
 .scribe-plugin-link-tooltip > * {
@@ -60,6 +61,15 @@ These few CSS styles are more or less required to make the plugin work:
 .scribe-plugin-link-tooltip-state-edit .scribe-plugin-link-tooltip-show-on-view,
 .scribe-plugin-link-tooltip-state-view .scribe-plugin-link-tooltip-show-on-edit {
   display: none;
+}
+
+[data-scribe-plugin-link-tooltip-role="arrow"] {
+  position: absolute;
+  bottom: 99%;
+  left: 50%;
+  height: 0;
+  width: 0;
+  border: 14px solid transparent;
 }
 ````
 
