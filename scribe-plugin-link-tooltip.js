@@ -171,7 +171,7 @@
                             tooltipNode.style.left = correctedOffsetLeft + 'px';
                             if (ui.arrow) {
                                 arrowWidth = ui.arrow.getBoundingClientRect().width;
-                                arrowOffsetLeft = offsetLeft - correctedOffsetLeft - arrowWidth / 2;
+                                arrowOffsetLeft = offsetLeft - correctedOffsetLeft - arrowWidth / 2 - 10;
                                 if (arrowOffsetLeft < 0) {
                                     arrowOffsetLeft = Math.max(arrowOffsetLeft, tooltipWidth / -2) + 10;
                                 }
