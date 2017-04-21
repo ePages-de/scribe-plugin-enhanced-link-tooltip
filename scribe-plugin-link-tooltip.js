@@ -66,7 +66,7 @@
                         if (node) {
                             range = document.createRange();
                             range.selectNode(node);
-                            selection.range = range;
+                            selection.selection.removeAllRanges();
                             selection.selection.addRange(range);
 
                         }

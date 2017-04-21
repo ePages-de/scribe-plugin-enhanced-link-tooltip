@@ -10,7 +10,7 @@ Inspired by [artsy/scribe-plugin-link-tooltip](https://github.com/artsy/scribe-p
 
 ## Usage
 
-See the [source code](https://github.com/ePages-de/scribe-plugin-enhanced-link-tooltip/blob/gh-pages/example.js#L117) of the [demo](http://ePages-de.github.io/scribe-plugin-enhanced-link-tooltip/example.html) (`example.html`, `example.js` in `gh-pages` branch).
+See the [source code](https://github.com/ePages-de/scribe-plugin-enhanced-link-tooltip/blob/master/example.js#L117) of the [demo](http://ePages-de.github.io/scribe-plugin-enhanced-link-tooltip/example.html) (`example.html`, `example.js`).
 
 Javascript (don't let yourself scare by the template stuff)
 ````javascript

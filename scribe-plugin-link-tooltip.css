@@ -26,3 +26,44 @@
   width: 0;
   border: 14px solid transparent;
 }
+
+/* Everything below is just to make the example look not totally ugly */
+.scribe-plugin-link-tooltip {
+  background: darkslategrey;
+}
+
+[data-scribe-plugin-link-tooltip-role="arrow"] {
+  border-bottom-color: darkslategrey;
+}
+
+.scribe-plugin-link-tooltip,
+.scribe-plugin-link-tooltip * {
+  color: snow;
+}
+
+.scribe-plugin-link-tooltip > * {
+  background: transparent;
+}
+
+.scribe-plugin-link-tooltip input,
+.scribe-plugin-link-tooltip a {
+  padding: .5em;
+}
+
+.scribe-plugin-link-tooltip input,
+.scribe-plugin-link-tooltip button {
+  border: 0;
+  outline: 0;
+}
+
+.scribe-plugin-link-tooltip button {
+  cursor: pointer;
+}
+
+.scribe-plugin-link-tooltip a {
+  margin-bottom: -0.7em;
+  display : inline-block;
+  max-width: 12em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
